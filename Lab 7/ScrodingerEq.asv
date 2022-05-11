@@ -1,0 +1,16 @@
+% RK4 Shcrodinger Plot
+
+function f = ScrodingerEq(x0,E,V)
+
+L = E-11; % m
+m = 9.109E-31; % kg
+
+k = n*pi()/L;
+
+psi = x0(1);
+dpsi = x0(2);
+ddpsi = 2*m/(h^2)*(V-E)*psi;
+
+f = [psi;ddpsi];
+
+end

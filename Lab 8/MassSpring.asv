@@ -1,0 +1,16 @@
+function A = MassSpring(m,k,n)
+
+A = zeros(n,n);
+
+for i = 1:n
+    A(i,i) = -2*k/m;
+    if i ==0
+        A(i,i+1) = k/m;
+    elseif i == n - 1
+        A(i,i-1) = k/m;
+    else
+        A(i,i+1) = k/m;
+        A(i,i
+end
+
+end

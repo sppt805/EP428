@@ -1,0 +1,18 @@
+% Script Q5
+
+E0 = 10E-8;
+hbar = 6.582E-16; % eV
+L = E-11; % m
+m = 0.511E6/(3E8)^2; % eV
+
+E = NewtonRaphsonMultivar(@PotentialWellBoundary,E0,1E-4);
+% f = TestingEq(x);
+
+E1 = pi()^2*hbar^2
+
+figure(2);
+plot(x,x(1,:));
+hold on
+title('Energy Solution');
+xlabel('x Displacement');
+ylabel('\Psi(x)');

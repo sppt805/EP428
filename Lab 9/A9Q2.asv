@@ -1,0 +1,25 @@
+%% Square Matrix
+A = [1 2 1; 2 3 2; 1 2 1];
+
+[U,S,V] = SingularValueDecomp(A);
+
+Arecon = SVDReconstruct(U,S,V,3);
+if((A-Arecon) ~= 1E-8)
+   disp[('Matrices not Equal')]; 
+end
+%% More rows than columns
+A = [2 4;1 3;0 0;0 0];
+[U,S,V] = SingularValueDecomp(A);
+
+Arecon = SVDReconstruct(U,S,V,2);
+if((A-Arecon) ~= 1E-8)
+   disp[('Matrices not Equal')]; 
+end
+%% More columns than rows
+A = [2 4 1;1 3 7];
+[U,S,V] = SingularValueDecomp(A);
+
+Arecon = SVDReconstruct(U,S,V,3);
+if((A-Arecon) ~= 1E-8)
+   disp(['Matrices not Equal']); 
+end
