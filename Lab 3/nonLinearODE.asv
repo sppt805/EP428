@@ -1,0 +1,13 @@
+%% Quesiton 3
+function ka = nonLinearODE(t, r)
+% initial Conditions
+k = 1;
+x = r(1);
+v = r(2);
+% Given coupled ODE relation
+x=sin(sqrt(k)*t^2);
+v=r*r_data(1)-r_data(2)-r_data(1)*r_data(3);
+kz=r_data(1)*r_data(2)-b*r_data(3);
+
+k = cell2mat({kx;ky;kz});
+end

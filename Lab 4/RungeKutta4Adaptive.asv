@@ -1,0 +1,60 @@
+function [t,r] = RungeKutta4Adaptive(f,r0,t0,tf,target)
+dt = (tf-t0)/1000;
+
+n = 10000;
+t = zeros(1,n);
+m = length(r0);
+r = zeros(m,n);
+
+t(1) = t0;
+r(:,1) = r0;
+
+i = 1;
+while t(i) < tf
+    % 2 steps of dt
+    k = rk4Slope(f,t(i),r(:,i),dt);
+    x1 = r(:,i) + k.*dt;
+    k = rk4Slope(f,t(i)+dt,x1,dt);
+    x1 = x1 + k.*dt; % solutions for each var at current time step
+%     t(i+1) = t(i) + dt;
+    % 1 step of 2*dt
+    k = rk4Slope(f,t(i),r(:,i),2.*dt);
+    x2 = r(:,i) + k.*dt; % [x2] solutions for each var at current time step
+    t(i+1) = t(i) + dt;
+%     e_step = abs(x1(1) - x2(1))/30;
+%     e_target = target * dt;
+%     rho = e_target/e_step;
+    rho = 30*(dt)*target/(abs(x1(1)-x2(1)));
+    % Accuracy Smaller Than Target
+    if rho < 1
+%         r(:,i+1) = r(:,i) + k*dt;
+%         t(i+1) = t(i) + dt;
+%         dt = 2*dt;
+%         i=i+1;
+       dt = dt.*(rho.^(1/4));
+       % 2 steps to get x1
+       x1 = r(:,i) + k.*dt;
+       k = rk4Slope(f,t(i)+dt,x1,dt);
+       r(:,i+1) = r(:,i) + k.*dt; % solutions for each var at current time step
+       t(i+1) = t(i) + dt;
+    else
+       dt = dt.*(rho.^(1/4));
+       % 2 steps to get x1
+       x1 = r(:,i) + k.*dt;
+       k = rk4Slope(f,t(i)+dt,x1,dt);
+       r(:,i+1) = r(:,i) + k.*dt; % solutions for each var at current time step
+       t(i+1) = t(i) + dt;
+%        dt = 2*dt;
+     
+%        t(i+1) = t(i) + 2*dt;
+%        i=i+1;
+    end
+%       k = rk4Slope(f,t(i)+dt,x1,dt);
+      r(:,i+1) = r(:,i) + k.*dt;
+%     t(i+1) = t(i) + 2*dt;
+      i=i+1;
+end
+
+% r(r==0.0000000)=nan; % Get rid of line connecting first and last point
+
+end
